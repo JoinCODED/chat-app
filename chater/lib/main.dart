@@ -1,6 +1,15 @@
+import 'package:chater/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  /// ensures that the framework is ready to handle
+  /// widget-related operations and provides access
+  /// to platform-specific resources
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
