@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// use [BuildContextX] extension on build context to reduce code callback
+// use [ContextExtension] extension on build context to reduce code callback
 // ex: context.screenHeight instead of MediaQuery.of(context).size.height
-extension BuildContextX on BuildContext {
+extension ContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   TextTheme get textTheme => Theme.of(this).textTheme;
@@ -13,6 +13,9 @@ extension BuildContextX on BuildContext {
 
   double get screenHeight => MediaQuery.of(this).size.height;
 
-  ScaffoldMessengerState get scaffoldMessenger => ScaffoldMessenger.of(this);
-
+  void showSnackbar(String message) {
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 }
