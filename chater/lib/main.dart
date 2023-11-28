@@ -4,6 +4,8 @@ import 'package:chater/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 void main() async {
   /// ensures that the framework is ready to handle
@@ -28,6 +30,9 @@ class MyApp extends StatelessWidget {
       title: "Chater",
       themeMode: ThemeMode.light,
       theme: MyTheme.lightTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('en'),
     );
   }
 }
