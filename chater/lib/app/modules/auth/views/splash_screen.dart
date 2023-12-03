@@ -13,22 +13,18 @@ class SplashScreen extends ConsumerWidget {
     final checkIfAuth = ref.watch(checkIfAuthinticated);
     return Scaffold(
       body: checkIfAuth.when(data: (AsyncValue<User?> data) {
-        if (data.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+        if (data.value?.uid != null) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            context.goNamed(MyNamedRoutes.homePage);
+          });
         } else {
-          if (data.value?.uid != null) {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              context.goNamed(MyNamedRoutes.homePage);
-            });
-          } else {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              context.goNamed(MyNamedRoutes.login);
-            });
-          }
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            context.goNamed(MyNamedRoutes.login);
+          });
         }
-        return null;
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       }, error: (Object error, StackTrace stackTrace) {
         return Center(child: Text(error.toString()));
       }, loading: () {
