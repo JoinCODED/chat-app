@@ -1,4 +1,5 @@
 import 'package:chater/app/config/router/named_routes.dart';
+import 'package:chater/app/modules/auth/views/home_page.dart';
 import 'package:chater/app/modules/auth/views/login_screen.dart';
 import 'package:chater/app/modules/auth/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:go_router/go_router.dart';
 ///[rootNavigatorKey] used for global | general navigation
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-abstract class AppRouter {
+class AppRouter {
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
       const SizedBox();
 
@@ -33,6 +34,15 @@ abstract class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const LoginScreen(),
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: rootNavigatorKey,
+        path: "/${MyNamedRoutes.homePage}",
+        name: MyNamedRoutes.homePage,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: const HomePage(),
         ),
       ),
     ],
