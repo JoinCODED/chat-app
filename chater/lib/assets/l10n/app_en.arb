@@ -1,3 +1,6 @@
 {
-    
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login"
 }

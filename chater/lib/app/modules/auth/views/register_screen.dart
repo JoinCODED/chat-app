@@ -3,20 +3,19 @@ import 'package:chater/app/modules/auth/widgets/auth_appbar.dart';
 import 'package:chater/app/modules/auth/widgets/my_auth_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AuthAppbar(
         appBarTitle: Text(
-          context.translate.login,
+          context.translate.register,
           style: const TextStyle(color: Colors.white),
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const MyAuthForm(),
           const Text(""),
@@ -25,7 +24,10 @@ class LoginScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 textStyle: const TextStyle(color: Colors.white)),
-            child: const Text("Login", style: TextStyle(color: Colors.white)),
+            child: const Text(
+              "Register",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),

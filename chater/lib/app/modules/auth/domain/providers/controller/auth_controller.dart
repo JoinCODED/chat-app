@@ -1,13 +1,64 @@
-
-
 import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
 import 'package:chater/app/modules/auth/domain/repo/auth_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthController extends StateNotifier<AuthState> {
   AuthController(super.state, this._authRepository);
   final AuthRepository _authRepository;
+
+  // Our Function will take email,password, username and buildcontext
+  void register(
+    String email,
+    String password,
+    String username,
+  ) async {
+    try {
+      // Get back usercredential future from createUserWithEmailAndPassword method
+      User? userCred = await _authRepository.createUserWithEmailAndPassword(
+          email: email, password: password);
+      if (userCred != null) {
+        // Save username name
+        await userCred.updateDisplayName(username);
+
+        // After that access "users" Firestore in firestore and save username, email and userLocation
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCred.uid)
+            .set(
+          {
+            'username': username,
+            'email': email,
+          },
+        );
+        state = state.copyWith(isLoading: false, isAuth: true);
+      }
+    } on FirebaseAuthException catch (e) {
+      // In case of error
+      // if email already exists
+      if (e.code == "email-already-in-use") {
+        state = state.copyWith(
+            isLoading: false,
+            isAuth: false,
+            error: "The account with this email already exists.");
+        debugPrint("The account with this email already exists.");
+      }
+      if (e.code == 'weak-password') {
+        // If password is too weak
+        state = state.copyWith(
+            isLoading: false, isAuth: false, error: "Password is too weak.");
+        debugPrint("Password is too weak.");
+      }
+    } catch (e) {
+      // For anything else
+      state =
+          state.copyWith(isLoading: false, isAuth: false, error: e.toString());
+      debugPrint("Something went wrong please try again.");
+    }
+  }
 
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     state = state.copyWith(isLoading: true);

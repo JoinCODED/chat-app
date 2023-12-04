@@ -28,11 +28,8 @@ class SplashScreen extends ConsumerWidget {
       }, error: (Object error, StackTrace stackTrace) {
         return Center(child: Text(error.toString()));
       }, loading: () {
-        return const Column(
-          children: [
-            CircularProgressIndicator(),
-            Center(child: Text("splash")),
-          ],
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       }),
     );

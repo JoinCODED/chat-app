@@ -1,5 +1,5 @@
 import 'package:chater/app/config/router/named_routes.dart';
-import 'package:chater/app/modules/auth/views/home_page.dart';
+import 'package:chater/app/modules/auth/views/home_screen.dart';
 import 'package:chater/app/modules/auth/views/login_screen.dart';
 import 'package:chater/app/modules/auth/views/splash_screen.dart';
 import 'package:flutter/material.dart';
