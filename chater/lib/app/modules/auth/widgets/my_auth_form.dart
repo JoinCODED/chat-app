@@ -51,8 +51,8 @@ class _MyAuthFormState extends State<MyAuthForm> {
                   labelText: context.translate.email,
                   textInputAction: TextInputAction.next,
                   isNonPasswordField: false),
-              SizedBox(
-                height: context.screenHeight * 0.01,
+              const SizedBox(
+                height: 12,
               ),
               MyTextFormWidget(
                   controller: passwordController,
