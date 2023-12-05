@@ -9,11 +9,8 @@ class MyTextFormWidget extends StatelessWidget {
       required this.prefIcon,
       required this.labelText,
       required this.textInputAction,
-      required this.isNonPasswordField,
       super.key});
 
-  // bool to check if the text field is for password or not
-  final bool isNonPasswordField;
   // Controller for the text field
   final TextEditingController controller;
   // to obscure text or not bool
@@ -41,14 +38,6 @@ class MyTextFormWidget extends StatelessWidget {
         ),
         label: Text(labelText),
         prefixIcon: prefIcon,
-        suffixIcon:
-
-            // If is non-password filed like email the suffix icon will be null
-            isNonPasswordField
-                ? const Icon(null)
-                : obscureText
-                    ? const Icon(Icons.visibility)
-                    : const Icon(Icons.visibility_off),
       ),
       focusNode: focusNode,
       textInputAction: textInputAction,

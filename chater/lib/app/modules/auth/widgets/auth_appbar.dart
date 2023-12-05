@@ -1,4 +1,3 @@
-import 'package:chater/app/core/constants/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,9 +12,6 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: showLeading,
       title: appBarTitle,
-
-      /// convert this color to a passed dynamic parameter like [showLeading] and [appBarTitle]
-      backgroundColor: MyColors.blue,
     );
   }
 

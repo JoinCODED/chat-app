@@ -1,3 +1,4 @@
+import 'package:chater/app/core/constants/my_colors.dart';
 import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/auth/widgets/auth_appbar.dart';
 import 'package:chater/app/modules/auth/widgets/my_auth_form.dart';
@@ -12,7 +13,9 @@ class LoginScreen extends StatelessWidget {
       appBar: AuthAppbar(
         appBarTitle: Text(
           context.translate.login,
-          style: const TextStyle(color: Colors.white),
+          style: context.theme.textTheme.titleMedium?.copyWith(
+            color: MyColors.white,
+          ),
         ),
       ),
       body: Column(
@@ -22,13 +25,16 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          const Text(""),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Already have an account, "),
+              Text("Register Now 😃")
+            ],
+          ),
           ElevatedButton(
             onPressed: () {},
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                textStyle: const TextStyle(color: Colors.white)),
-            child: const Text("Login", style: TextStyle(color: Colors.white)),
+            child: Text(context.translate.login),
           ),
         ],
       ),

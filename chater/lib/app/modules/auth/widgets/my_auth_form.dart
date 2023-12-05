@@ -50,7 +50,7 @@ class _MyAuthFormState extends State<MyAuthForm> {
                   prefIcon: const Icon(Icons.email),
                   labelText: context.translate.email,
                   textInputAction: TextInputAction.next,
-                  isNonPasswordField: false),
+                  ),
               const SizedBox(
                 height: 12,
               ),
@@ -62,7 +62,7 @@ class _MyAuthFormState extends State<MyAuthForm> {
                   prefIcon: const Icon(Icons.password),
                   labelText: context.translate.password,
                   textInputAction: TextInputAction.done,
-                  isNonPasswordField: true),
+                  ),
             ],
           ),
         ),
