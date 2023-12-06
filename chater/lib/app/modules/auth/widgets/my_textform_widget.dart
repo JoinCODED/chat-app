@@ -9,6 +9,7 @@ class MyTextFormWidget extends StatelessWidget {
       required this.prefIcon,
       required this.labelText,
       required this.textInputAction,
+      required this.onChanged,
       super.key});
 
   // Controller for the text field
@@ -25,6 +26,8 @@ class MyTextFormWidget extends StatelessWidget {
   final String labelText;
   // The keyword action to display
   final TextInputAction textInputAction;
+
+  final String? Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,7 @@ class MyTextFormWidget extends StatelessWidget {
       textInputAction: textInputAction,
       obscureText: obscureText,
       validator: validator,
+      onChanged: onChanged,
     );
   }
 }

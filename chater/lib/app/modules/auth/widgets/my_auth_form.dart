@@ -12,7 +12,7 @@ class MyAuthForm extends StatefulWidget {
   State createState() => _MyAuthFormState();
 }
 
-class _MyAuthFormState extends State<MyAuthForm> {
+class _MyAuthFormState extends State<MyAuthForm> with AuthValidators {
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -22,8 +22,6 @@ class _MyAuthFormState extends State<MyAuthForm> {
 
     final passwordController = TextEditingController();
     final passwordFocusNode = FocusNode();
-
-    final authValidators = AuthValidators();
 
     @override
     void dispose() {
@@ -43,26 +41,30 @@ class _MyAuthFormState extends State<MyAuthForm> {
           child: Column(
             children: [
               MyTextFormWidget(
-                  controller: emailController,
-                  obscureText: false,
-                  focusNode: emailFocusNode,
-                  validator: (input) => authValidators.emailValidator(input),
-                  prefIcon: const Icon(Icons.email),
-                  labelText: context.translate.email,
-                  textInputAction: TextInputAction.next,
-                  ),
+                controller: emailController,
+                obscureText: false,
+                focusNode: emailFocusNode,
+                validator: (input) => emailValidator(input),
+                prefIcon: const Icon(Icons.email),
+                labelText: context.translate.email,
+                textInputAction: TextInputAction.next,
+                onChanged: (value) {
+                  
+                },
+              ),
               const SizedBox(
                 height: 12,
               ),
               MyTextFormWidget(
-                  controller: passwordController,
-                  obscureText: true,
-                  focusNode: passwordFocusNode,
-                  validator: (input) => authValidators.passwordVlidator(input),
-                  prefIcon: const Icon(Icons.password),
-                  labelText: context.translate.password,
-                  textInputAction: TextInputAction.done,
-                  ),
+                controller: passwordController,
+                obscureText: true,
+                focusNode: passwordFocusNode,
+                validator: (input) => passwordVlidator(input),
+                prefIcon: const Icon(Icons.password),
+                labelText: context.translate.password,
+                textInputAction: TextInputAction.done,
+                onChanged: (value) {},
+              ),
             ],
           ),
         ),

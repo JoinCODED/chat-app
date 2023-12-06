@@ -1,4 +1,4 @@
-class AuthValidators {
+mixin AuthValidators {
   // Create error messages to send.
   static const String emailErrMsg =
       "Invalid Email Address, Please provide a valid email.";

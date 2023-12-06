@@ -1,7 +1,7 @@
+import 'package:chater/app/modules/auth/domain/api/auth_api.dart';
 import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
 import 'package:chater/app/modules/auth/domain/repo/auth_repo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,16 +25,12 @@ class AuthController extends StateNotifier<AuthState> {
         await userCred.updateDisplayName(username);
 
         // After that access "users" Firestore in firestore and save username, email and userLocation
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCred.uid)
-            .set(
-          {
-            'username': username,
-            'email': email,
-          },
-        );
-        state = state.copyWith(isLoading: false, isAuth: true);
+        final updateUserResult =
+            authApi.setUserInformation(userCred, username, email);
+
+        if (updateUserResult) {
+          state = state.copyWith(isLoading: false, isAuth: true);
+        }
       }
     } on FirebaseAuthException catch (e) {
       // In case of error
