@@ -14,6 +14,13 @@ class SplashScreen extends ConsumerWidget {
     return Scaffold(
       body: checkIfAuth.when(data: (AsyncValue<User?> data) {
         if (data.value?.uid != null) {
+          /*
+          Sometimes, you need to perform certain tasks after the UI has been updated and rendered. 
+          This could involve measuring the size of a widget, showing a dialog, or animating elements 
+          based on their final positions.
+          Using WidgetsBinding.instance.addPostFrameCallback allows you to delay these tasks until the next frame,
+          ensuring the UI is fully updated and the correct dimensions are available
+          */
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             context.goNamed(MyNamedRoutes.homePage);
           });
