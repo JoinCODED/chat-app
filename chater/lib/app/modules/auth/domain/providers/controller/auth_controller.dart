@@ -1,4 +1,3 @@
-import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
 import 'package:chater/app/modules/auth/domain/repo/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,75 +8,53 @@ class AuthController extends StateNotifier<AuthState> {
   AuthController(super.state, this._authRepository);
   final AuthRepository _authRepository;
 
-  String? setEmailField(String? value) {
-    state = state.copyWith(email: value);
-    debugPrint("setEmailField $value");
-    return value;
-  }
-
-  String? setUserNameField(String? value) {
-    state = state.copyWith(userName: value);
-    debugPrint("setUserNameField $value");
-    return value;
-  }
-
-  String? setPasswordField(String? value) {
-    state = state.copyWith(password: value);
-    debugPrint("setPasswordField $value");
-    return value;
-  }
-
   // Our Function will take email,password, username and buildcontext
-  Future<void> register() async {
+  Future<bool> register({
+    required String email,
+    required String userName,
+    required String password,
+  }) async {
+    state = state.copyWith(isLoading: true);
     try {
       // Get back usercredential future from createUserWithEmailAndPassword method
       User? userCred = await _authRepository.createUserWithEmailAndPassword(
-          email: state.email.toString(), password: state.password.toString());
+          email: email.toString(), password: password.toString());
       if (userCred != null) {
         // Save username name
-        await userCred.updateDisplayName(state.userName.toString());
+        await userCred.updateDisplayName(userName.toString());
 
         // After that access "users" Firestore in firestore and save username, email and userLocation
         await _authRepository.saveUserInfoToFirebase(
-            userCred.uid, state.userName.toString(), state.email.toString());
-
+            userCred.uid, userName.toString(), email.toString());
         state = state.copyWith(isLoading: false, isAuth: true);
-      }
-    } on FirebaseAuthException catch (e) {
-      // In case of error
-      // if email already exists
-      if (e.code == "email-already-in-use") {
-        state = state.copyWith(
-            isLoading: false,
-            isAuth: false,
-            error: "The account with this email already exists.");
-        debugPrint("The account with this email already exists.");
-      }
-      if (e.code == 'weak-password') {
-        // If password is too weak
-        state = state.copyWith(
-            isLoading: false, isAuth: false, error: "Password is too weak.");
-        debugPrint("Password is too weak.");
+        return true;
       }
     } catch (e) {
-      // For anything else
       state =
           state.copyWith(isLoading: false, isAuth: false, error: e.toString());
-      debugPrint("Something went wrong please try again.");
+      debugPrint(e.toString());
+      return false;
     }
+    return false;
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  Future<bool> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     state = state.copyWith(isLoading: true);
     try {
       final user =
           await _authRepository.signInWithEmailAndPassword(email, password);
       if (user != null) {
         state = state.copyWith(isLoading: false, isAuth: true);
+        return true;
       }
     } on AuthException catch (e) {
       state = state.copyWith(isLoading: false, error: e.message);
+      return false;
     }
+    return false;
   }
 
   Future<void> signInWithGoogle() async {
@@ -106,12 +83,3 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
 }
-
-final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
-  (ref) {
-    return AuthController(
-      AuthState(),
-      ref.watch(authRepositoryProvider),
-    );
-  },
-);

@@ -34,7 +34,7 @@ class AppRouter {
         name: MyNamedRoutes.login,
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: const LoginScreen(),
+          child: LoginScreen(),
         ),
       ),
       GoRoute(
@@ -43,7 +43,7 @@ class AppRouter {
         name: MyNamedRoutes.register,
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: const RegisterScreen(),
+          child: RegisterScreen(),
         ),
       ),
       GoRoute(

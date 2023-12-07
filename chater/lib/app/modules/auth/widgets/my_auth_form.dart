@@ -8,45 +8,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyAuthForm extends ConsumerStatefulWidget {
-  const MyAuthForm({super.key, required this.fromRegister});
+  const MyAuthForm(
+      {super.key,
+      required this.fromRegister,
+      this.registerFormKey,
+      this.loginFormKey});
   final bool fromRegister;
+  final GlobalKey<FormState>? registerFormKey;
+  final GlobalKey<FormState>? loginFormKey;
+  //loginFormKey
 
   @override
   ConsumerState createState() => _MyAuthFormState();
 }
 
 class _MyAuthFormState extends ConsumerState<MyAuthForm> {
-  final formKey = GlobalKey<FormState>();
+  final authValidators = AuthValidators();
+
+  final TextEditingController emailController = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
+
+  final TextEditingController userNameController = TextEditingController();
+  final FocusNode userNameFocus = FocusNode();
+
+  final TextEditingController passwordController = TextEditingController();
+  final FocusNode passwordFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    emailFocusNode.dispose();
+
+    passwordController.dispose();
+    passwordFocusNode.dispose();
+
+    userNameController.dispose();
+    userNameFocus.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final authValidators = AuthValidators();
-    final authStateProvider = ref.watch(authControllerProvider.notifier);
-    final TextEditingController emailController = TextEditingController();
-    final FocusNode emailFocusNode = FocusNode();
-
-    final TextEditingController userNameController = TextEditingController();
-    final FocusNode userNameFocus = FocusNode();
-
-    final TextEditingController passwordController = TextEditingController();
-    final FocusNode passwordFocusNode = FocusNode();
-
-    @override
-    void dispose() {
-      super.dispose();
-      emailController.dispose();
-      emailFocusNode.dispose();
-
-      passwordController.dispose();
-      passwordFocusNode.dispose();
-
-      userNameController.dispose();
-      userNameFocus.dispose();
-    }
+    final authFormContrller = ref.watch(authFormController);
 
     return SizedBox(
       child: Form(
-        key: formKey,
+        key: widget.fromRegister ? widget.registerFormKey : widget.loginFormKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -62,7 +69,10 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
                 labelText: context.translate.email,
                 textInputAction: TextInputAction.next,
                 onChanged: (value) {
-                  return authStateProvider.setEmailField(value);
+                  if (value != null) {
+                    authFormContrller.setEmailField(value);
+                  }
+                  return null;
                 },
               ),
               const SizedBox(
@@ -82,7 +92,10 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
                       labelText: context.translate.userName,
                       textInputAction: TextInputAction.next,
                       onChanged: (value) {
-                        return authStateProvider.setUserNameField(value);
+                        if (value != null) {
+                          authFormContrller.setUserNameField(value);
+                        }
+                        return null;
                       },
                     ),
                     const SizedBox(
@@ -100,7 +113,10 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
                 labelText: context.translate.password,
                 textInputAction: TextInputAction.done,
                 onChanged: (value) {
-                  return authStateProvider.setPasswordField(value);
+                  if (value != null) {
+                    authFormContrller.setPasswordField(value);
+                  }
+                  return null;
                 },
               ),
             ],

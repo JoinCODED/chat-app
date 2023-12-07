@@ -1,7 +1,9 @@
 import 'package:chater/app/config/router/named_routes.dart';
 import 'package:chater/app/core/constants/my_colors.dart';
 import 'package:chater/app/core/extensions/context_extension.dart';
-import 'package:chater/app/modules/auth/domain/providers/controller/auth_controller.dart';
+import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
+import 'package:chater/app/modules/auth/domain/providers/controller/form_controller.dart';
+import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
 import 'package:chater/app/modules/auth/widgets/auth_appbar.dart';
 import 'package:chater/app/modules/auth/widgets/my_auth_form.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const MyAuthForm(fromRegister: true),
+          MyAuthForm(fromRegister: true, registerFormKey: formKey),
           const SizedBox(
             height: 12,
           ),
@@ -48,21 +52,40 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          Consumer(builder: (context, ref, child) {
+          Consumer(builder: (_, ref, __) {
             final authStateProvider =
                 ref.watch(authControllerProvider.notifier);
-            final authState = ref.watch(authControllerProvider);
+            final AuthState authState = ref.watch(authControllerProvider);
+            final MyAuthFormController authFormContrller =
+                ref.watch(authFormController);
             return ElevatedButton(
-              onPressed: () {
-                authStateProvider.register().whenComplete(() {
-                  if (authState.isAuth) {
-                    context.pushNamed(MyNamedRoutes.login);
-                  }
-                });
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  authStateProvider
+                      .register(
+                    email: authFormContrller.email,
+                    userName: authFormContrller.userName,
+                    password: authFormContrller.password,
+                  )
+                      .then((result) {
+                    if (result == true) {
+                      context.goNamed(MyNamedRoutes.login);
+                    } else if (authState.error != null) {
+                      context.showSnackbar(authState.error.toString());
+                    }
+                  });
+                }
               },
-              child: Text(
-                context.translate.register,
-              ),
+              child: authState.isLoading
+                  ? const Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: CircularProgressIndicator(
+                        color: MyColors.white,
+                      ),
+                    )
+                  : Text(
+                      context.translate.register,
+                    ),
             );
           }),
         ],

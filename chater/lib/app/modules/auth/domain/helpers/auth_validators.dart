@@ -10,14 +10,14 @@ class AuthValidators {
     debugPrint("emailValidator $val");
     if (val != null) {
       final bool emailValid = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$')
           .hasMatch(val);
       // if (emailValid == false) {
-      if (!emailValid) {
-        return "Emial is Not Valid";
+      if (emailValid) {
+        return null;
       }
     }
-    return null;
+    return "Emial is Not Valid";
   }
 
   // Password validator
@@ -33,7 +33,7 @@ class AuthValidators {
     if (val != null && val.length > 3) {
       return null;
     } else {
-      return "UserNama must be more than 3 charecters";
+      return "User Name must be more than 3 charecters";
     }
   }
 }
