@@ -1,6 +1,5 @@
 import 'package:chater/app/config/router/named_routes.dart';
-import 'package:chater/app/modules/auth/views/home_screen.dart';
-import 'package:chater/app/modules/auth/views/login_screen.dart';
+import 'package:chater/app/modules/home/views/home_screen.dart';
 import 'package:chater/app/modules/auth/views/register_screen.dart';
 import 'package:chater/app/modules/auth/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +25,6 @@ class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const SplashScreen(),
-        ),
-      ),
-      GoRoute(
-        parentNavigatorKey: rootNavigatorKey,
-        path: "/${MyNamedRoutes.login}",
-        name: MyNamedRoutes.login,
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: LoginScreen(),
         ),
       ),
       GoRoute(

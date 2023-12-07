@@ -7,5 +7,6 @@
     "registerNow": "Register Now",
     "alreadyHaveAnAccount": "Already have an account",
     "pleaseLogin": "Please login",
-    "userName": "User Name"
+    "userName": "User Name",
+    "googleLogin": "Google Login"
 }

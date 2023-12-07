@@ -1,4 +1,5 @@
 import 'package:chater/app/config/router/named_routes.dart';
+import 'package:chater/app/core/constants/my_colors.dart';
 import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,13 +24,20 @@ class HomePage extends StatelessWidget {
               final authState = ref.watch(authControllerProvider);
               return ElevatedButton(
                 onPressed: () {
-                  authProvider.signOut().whenComplete(() {
-                    if (authState.isAuth == false) {
-                      context.goNamed(MyNamedRoutes.login);
+                  authProvider.signOut().then((result) {
+                    if (result == true) {
+                      context.goNamed(MyNamedRoutes.register);
                     }
                   });
                 },
-                child: const Text("Logout"),
+                child: authState.isLoading
+                    ? const Padding(
+                        padding: EdgeInsets.all(4),
+                        child: CircularProgressIndicator(
+                          color: MyColors.primary_500,
+                        ),
+                      )
+                    : const Text("Logout"),
               );
             }),
           ],

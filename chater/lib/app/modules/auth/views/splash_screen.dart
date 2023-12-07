@@ -19,7 +19,7 @@ class SplashScreen extends ConsumerWidget {
           });
         } else {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            context.goNamed(MyNamedRoutes.login);
+            context.goNamed(MyNamedRoutes.register);
           });
         }
         return const Center(

@@ -29,30 +29,11 @@ class RegisterScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MyAuthForm(fromRegister: true, registerFormKey: formKey),
+          MyAuthForm(registerFormKey: formKey),
           const SizedBox(
             height: 12,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${context.translate.alreadyHaveAnAccount}, "),
-              GestureDetector(
-                onTap: () {
-                  context.goNamed(MyNamedRoutes.login);
-                },
-                child: Text(
-                  context.translate.pleaseLogin,
-                  style: context.theme.textTheme.bodyLarge
-                      ?.copyWith(color: MyColors.blue),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          Consumer(builder: (_, ref, __) {
+          Consumer(builder: (context, ref, child) {
             final authStateProvider =
                 ref.watch(authControllerProvider.notifier);
             final AuthState authState = ref.watch(authControllerProvider);
@@ -69,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                   )
                       .then((result) {
                     if (result == true) {
-                      context.goNamed(MyNamedRoutes.login);
+                      context.goNamed(MyNamedRoutes.homePage);
                     } else if (authState.error != null) {
                       context.showSnackbar(authState.error.toString());
                     }
@@ -88,6 +69,46 @@ class RegisterScreen extends StatelessWidget {
                     ),
             );
           }),
+          const SizedBox(
+            height: 25,
+          ),
+          Consumer(builder: (context, ref, child) {
+            final authStateProvider =
+                ref.watch(authControllerProvider.notifier);
+            final AuthState authState = ref.watch(authControllerProvider);
+
+            return TextButton(
+              onPressed: () {
+                authStateProvider.signInWithGoogle().then((result) {
+                  if (result == true) {
+                    context.goNamed(MyNamedRoutes.homePage);
+                  } else if (authState.error != null) {
+                    context.showSnackbar(authState.error.toString());
+                  }
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    context.translate.googleLogin,
+                    style: context.textTheme.bodyLarge?.copyWith(
+                        color: MyColors.primary_500,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Visibility(
+                    visible: authState.isLoading,
+                    child: const CircularProgressIndicator(
+                      color: MyColors.primary_500,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          })
         ],
       ),
     );

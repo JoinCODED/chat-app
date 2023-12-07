@@ -8,15 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyAuthForm extends ConsumerStatefulWidget {
-  const MyAuthForm(
-      {super.key,
-      required this.fromRegister,
-      this.registerFormKey,
-      this.loginFormKey});
-  final bool fromRegister;
+  const MyAuthForm({
+    super.key,
+    this.registerFormKey,
+  });
+
   final GlobalKey<FormState>? registerFormKey;
-  final GlobalKey<FormState>? loginFormKey;
-  //loginFormKey
 
   @override
   ConsumerState createState() => _MyAuthFormState();
@@ -53,7 +50,7 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
 
     return SizedBox(
       child: Form(
-        key: widget.fromRegister ? widget.registerFormKey : widget.loginFormKey,
+        key: widget.registerFormKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -78,31 +75,28 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
               const SizedBox(
                 height: 12,
               ),
-              Visibility(
-                visible: widget.fromRegister,
-                child: Column(
-                  children: [
-                    MyTextFormWidget(
-                      controller: userNameController,
-                      obscureText: false,
-                      focusNode: userNameFocus,
-                      validator: (input) =>
-                          authValidators.userNameValidator(input),
-                      prefIcon: const Icon(Icons.person),
-                      labelText: context.translate.userName,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        if (value != null) {
-                          authFormContrller.setUserNameField(value);
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  MyTextFormWidget(
+                    controller: userNameController,
+                    obscureText: false,
+                    focusNode: userNameFocus,
+                    validator: (input) =>
+                        authValidators.userNameValidator(input),
+                    prefIcon: const Icon(Icons.person),
+                    labelText: context.translate.userName,
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      if (value != null) {
+                        authFormContrller.setUserNameField(value);
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                ],
               ),
               MyTextFormWidget(
                 controller: passwordController,
