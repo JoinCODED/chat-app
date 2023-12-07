@@ -23,7 +23,9 @@ class LoginScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const MyAuthForm(),
+          const MyAuthForm(
+            fromRegister: false,
+          ),
           const SizedBox(
             height: 12,
           ),

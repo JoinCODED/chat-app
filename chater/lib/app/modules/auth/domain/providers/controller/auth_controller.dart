@@ -9,27 +9,39 @@ class AuthController extends StateNotifier<AuthState> {
   AuthController(super.state, this._authRepository);
   final AuthRepository _authRepository;
 
+  String? setEmailField(String? value) {
+    state = state.copyWith(email: value);
+    debugPrint("setEmailField $value");
+    return value;
+  }
+
+  String? setUserNameField(String? value) {
+    state = state.copyWith(userName: value);
+    debugPrint("setUserNameField $value");
+    return value;
+  }
+
+  String? setPasswordField(String? value) {
+    state = state.copyWith(password: value);
+    debugPrint("setPasswordField $value");
+    return value;
+  }
+
   // Our Function will take email,password, username and buildcontext
-  void register(
-    String email,
-    String password,
-    String username,
-  ) async {
+  Future<void> register() async {
     try {
       // Get back usercredential future from createUserWithEmailAndPassword method
       User? userCred = await _authRepository.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: state.email.toString(), password: state.password.toString());
       if (userCred != null) {
         // Save username name
-        await userCred.updateDisplayName(username);
+        await userCred.updateDisplayName(state.userName.toString());
 
         // After that access "users" Firestore in firestore and save username, email and userLocation
-        // final updateUserResult =
-        //     await authApi.setUserInformation(userCred, username, email);
+        await _authRepository.saveUserInfoToFirebase(
+            userCred.uid, state.userName.toString(), state.email.toString());
 
-        // if (updateUserResult) {
         state = state.copyWith(isLoading: false, isAuth: true);
-        // }
       }
     } on FirebaseAuthException catch (e) {
       // In case of error

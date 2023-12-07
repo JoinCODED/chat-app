@@ -1,9 +1,11 @@
 import 'package:chater/app/config/router/named_routes.dart';
 import 'package:chater/app/core/constants/my_colors.dart';
 import 'package:chater/app/core/extensions/context_extension.dart';
+import 'package:chater/app/modules/auth/domain/providers/controller/auth_controller.dart';
 import 'package:chater/app/modules/auth/widgets/auth_appbar.dart';
 import 'package:chater/app/modules/auth/widgets/my_auth_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -23,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const MyAuthForm(),
+          const MyAuthForm(fromRegister: true),
           const SizedBox(
             height: 12,
           ),
@@ -46,12 +48,23 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              context.translate.register,
-            ),
-          ),
+          Consumer(builder: (context, ref, child) {
+            final authStateProvider =
+                ref.watch(authControllerProvider.notifier);
+            final authState = ref.watch(authControllerProvider);
+            return ElevatedButton(
+              onPressed: () {
+                authStateProvider.register().whenComplete(() {
+                  if (authState.isAuth) {
+                    context.pushNamed(MyNamedRoutes.login);
+                  }
+                });
+              },
+              child: Text(
+                context.translate.register,
+              ),
+            );
+          }),
         ],
       ),
     );

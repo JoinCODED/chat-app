@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -72,8 +73,27 @@ class AuthRepository {
     }
   }
 
+  Future<void> saveUserInfoToFirebase(
+      String userId, String userName, String email) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).set(
+        {
+          'username': userName,
+          'email': email,
+          'userLocation': null,
+        },
+      );
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      throw e.toString();
+    }
   }
 }
 
