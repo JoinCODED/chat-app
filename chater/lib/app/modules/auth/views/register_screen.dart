@@ -33,6 +33,7 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
+          /// email registeration button 
           Consumer(builder: (context, ref, child) {
             final authStateProvider =
                 ref.watch(authControllerProvider.notifier);
@@ -72,6 +73,7 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(
             height: 25,
           ),
+          /// google login button
           Consumer(builder: (context, ref, child) {
             final authStateProvider =
                 ref.watch(authControllerProvider.notifier);

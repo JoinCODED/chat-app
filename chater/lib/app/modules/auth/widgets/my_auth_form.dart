@@ -100,7 +100,7 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
               ),
               MyTextFormWidget(
                 controller: passwordController,
-                obscureText: false,
+                obscureText: authFormContrller.togglePassword ? true : false,
                 focusNode: passwordFocusNode,
                 validator: (input) => authValidators.passwordVlidator(input),
                 prefIcon: const Icon(Icons.password),
@@ -112,6 +112,14 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
                   }
                   return null;
                 },
+                togglePassword: () {
+                  authFormContrller.togglePasswordIcon();
+                },
+                suffexIcon: Icon(
+                  authFormContrller.togglePassword
+                      ? Icons.remove_red_eye_outlined
+                      : Icons.remove_red_eye_rounded,
+                ),
               ),
             ],
           ),
