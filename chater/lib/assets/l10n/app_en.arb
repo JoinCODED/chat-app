@@ -1,0 +1,12 @@
+{
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "dontHaveAnAccount": "Dont't have an account",
+    "registerNow": "Register Now",
+    "alreadyHaveAnAccount": "Already have an account",
+    "pleaseLogin": "Please login",
+    "userName": "User Name",
+    "googleLogin": "Google Login"
+}

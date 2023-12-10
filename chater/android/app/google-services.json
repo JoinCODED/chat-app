@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "182587816745",
+    "project_id": "chater-b59a0",
+    "storage_bucket": "chater-b59a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182587816745:android:15a36e85e4263da06d9538",
+        "android_client_info": {
+          "package_name": "com.example.chater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182587816745-g0pm2mm8qa0q7hmfv4shfcbppsgsvrha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chater",
+            "certificate_hash": "a88644a19cce02466ed82ddfd5d0e0600d0d2cdd"
+          }
+        },
+        {
+          "client_id": "182587816745-0akl166742oaqmkbhrhu6juravru0t90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKlrKqT76we20LFr9T8uXsI77jFwfmrPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182587816745-0akl166742oaqmkbhrhu6juravru0t90.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "182587816745-6tq5o1asv9cg937dfhiaov9icbqkfukg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chater"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
