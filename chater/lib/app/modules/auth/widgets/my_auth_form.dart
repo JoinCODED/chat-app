@@ -100,7 +100,8 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
               ),
               MyTextFormWidget(
                 controller: passwordController,
-                obscureText: authFormContrller.togglePassword ? true : false,
+                obscureText:
+                    authFormContrller.togglePassword == false ? true : false,
                 focusNode: passwordFocusNode,
                 validator: (input) => authValidators.passwordVlidator(input),
                 prefIcon: const Icon(Icons.password),
