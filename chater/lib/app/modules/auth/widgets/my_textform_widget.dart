@@ -1,3 +1,4 @@
+import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class MyTextFormWidget extends StatelessWidget {
@@ -10,6 +11,8 @@ class MyTextFormWidget extends StatelessWidget {
       required this.labelText,
       required this.textInputAction,
       required this.onChanged,
+      this.suffexIcon,
+      this.togglePassword,
       super.key});
 
   // Controller for the text field
@@ -22,6 +25,8 @@ class MyTextFormWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   // Prefix icon for input form
   final Icon prefIcon;
+  // Suffex icon for password field
+  final Icon? suffexIcon;
   // label for input form
   final String labelText;
   // The keyword action to display
@@ -29,24 +34,33 @@ class MyTextFormWidget extends StatelessWidget {
 
   final String? Function(String?)? onChanged;
 
+  final void Function()? togglePassword;
+
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        // Input with border outlined
-        border: const OutlineInputBorder(
-          // Make border edge circular
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    return SizedBox(
+      height: context.screenHeight * 0.07,
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          // Input with border outlined
+          border: const OutlineInputBorder(
+            // Make border edge circular
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          label: Text(labelText),
+          suffix: IconButton(
+            onPressed: togglePassword,
+            icon: suffexIcon ?? const SizedBox(),
+          ),
+          prefixIcon: prefIcon,
         ),
-        label: Text(labelText),
-        prefixIcon: prefIcon,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
+        obscureText: obscureText,
+        validator: validator,
+        onChanged: onChanged,
       ),
-      focusNode: focusNode,
-      textInputAction: textInputAction,
-      obscureText: obscureText,
-      validator: validator,
-      onChanged: onChanged,
     );
   }
 }
