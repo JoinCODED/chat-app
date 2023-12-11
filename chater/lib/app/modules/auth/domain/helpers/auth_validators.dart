@@ -12,7 +12,6 @@ class AuthValidators {
       final bool emailValid = RegExp(
               r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$')
           .hasMatch(val);
-      // if (emailValid == false) {
       if (emailValid) {
         return null;
       }

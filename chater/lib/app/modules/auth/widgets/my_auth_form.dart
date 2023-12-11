@@ -75,33 +75,28 @@ class _MyAuthFormState extends ConsumerState<MyAuthForm> {
               const SizedBox(
                 height: 12,
               ),
-              Column(
-                children: [
-                  MyTextFormWidget(
-                    controller: userNameController,
-                    obscureText: false,
-                    focusNode: userNameFocus,
-                    validator: (input) =>
-                        authValidators.userNameValidator(input),
-                    prefIcon: const Icon(Icons.person),
-                    labelText: context.translate.userName,
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      if (value != null) {
-                        authFormContrller.setUserNameField(value);
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                ],
+              MyTextFormWidget(
+                controller: userNameController,
+                obscureText: false,
+                focusNode: userNameFocus,
+                validator: (input) => authValidators.userNameValidator(input),
+                prefIcon: const Icon(Icons.person),
+                labelText: context.translate.userName,
+                textInputAction: TextInputAction.next,
+                onChanged: (value) {
+                  if (value != null) {
+                    authFormContrller.setUserNameField(value);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 12,
               ),
               MyTextFormWidget(
                 controller: passwordController,
-                obscureText:
-                    authFormContrller.togglePassword == false ? true : false,
+                obscureText: true,
+                // authFormContrller.togglePassword == false ? true : false,
                 focusNode: passwordFocusNode,
                 validator: (input) => authValidators.passwordVlidator(input),
                 prefIcon: const Icon(Icons.password),
