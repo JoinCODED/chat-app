@@ -1,3 +1,4 @@
+import 'package:chater/app/modules/auth/domain/models/auth_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class AuthRepository {
       return userCredential.user;
     } catch (e) {
       debugPrint(e.toString());
-      return null;
+      throw AuthException(e.toString());
     }
   }
 
@@ -68,7 +69,7 @@ class AuthRepository {
         },
       );
     } catch (e) {
-      throw e.toString();
+      throw AuthException(e.toString());
     }
   }
 
@@ -76,16 +77,10 @@ class AuthRepository {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      throw e.toString();
+      debugPrint(e.toString());
+      throw AuthException(e.toString());
     }
   }
 }
 
-class AuthException implements Exception {
-  AuthException(this.message);
 
-  final String message;
-
-  @override
-  String toString() => message;
-}
