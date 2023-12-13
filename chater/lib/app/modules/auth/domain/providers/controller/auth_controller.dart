@@ -1,3 +1,4 @@
+import 'package:chater/app/modules/auth/domain/models/auth_exception.dart';
 import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
 import 'package:chater/app/modules/auth/domain/repo/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,7 @@ class AuthController extends StateNotifier<AuthState> {
         state = state.copyWith(isLoading: false, isAuth: true);
         return true;
       }
-    } catch (e) {
+    } on AuthException catch (e) {
       state =
           state.copyWith(isLoading: false, isAuth: false, error: e.toString());
       debugPrint(e.toString());
