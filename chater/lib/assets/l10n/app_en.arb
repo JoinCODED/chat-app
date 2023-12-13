@@ -8,5 +8,8 @@
     "alreadyHaveAnAccount": "Already have an account",
     "pleaseLogin": "Please login",
     "userName": "User Name",
-    "googleLogin": "Google Login"
+    "googleLogin": "Google Login",
+    "home": "Home",
+    "location": "Locations",
+    "profile": "Profile"
 }
