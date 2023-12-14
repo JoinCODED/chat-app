@@ -11,5 +11,8 @@
     "googleLogin": "Google Login",
     "home": "Home",
     "location": "Locations",
-    "profile": "Profile"
+    "profile": "Profile",
+    "users": "Users",
+    "errorFetchingUsers": "Error fetching users",
+    "noUsersFound": "No users found"
 }

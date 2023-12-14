@@ -1,5 +1,7 @@
+import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/chats/domain/providers/providers.dart';
+import 'package:chater/app/modules/chats/widgets/chat_user_card.dart';
 import 'package:chater/app/modules/shared/auth_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,38 +11,27 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatsRepo = ref.watch(chatsRepositoryProvider);
+    final chatUsers = ref.watch(usersProvider);
     return Scaffold(
-      appBar: const MyAppbar(appBarTitle: Text("Registered Users")),
-      body: FutureBuilder<List<User>>(
-        future: chatsRepo.fetchRegisteredUsers(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Error fetching users'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No users found'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final user = snapshot.data![index];
-                return Card(
-                  child: ListTile(
-                    title: Text(user.username),
-                    subtitle: Text(user.email),
-                    // Other user details or actions
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
+      appBar: MyAppbar(appBarTitle: Text(context.translate.users)),
+      body: chatUsers.when(data: (List<User> data) {
+        return ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            final user = data[index];
+            return ChatUserCard(user: user);
+          },
+        );
+      }, error: (Object error, StackTrace stackTrace) {
+        return Center(child: Text(context.translate.errorFetchingUsers));
+      }, loading: () {
+        return const Center(child: CircularProgressIndicator());
+      }),
     );
   }
 }
+
+
 
 
 /*

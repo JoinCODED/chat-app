@@ -9,7 +9,7 @@ class ChatsRepository {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('users').get();
       List<User> userList = querySnapshot.docs
-          .map((doc) => User.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => User.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
 
       return userList;
