@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 class ChatsRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<User>> fetchRegisteredUsers() async {
+  Future<List<MyUser>> fetchRegisteredUsers() async {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('users').get();
-      List<User> userList = querySnapshot.docs
-          .map((doc) => User.fromMap(doc.data() as Map<String, dynamic>))
+      List<MyUser> userList = querySnapshot.docs
+          .map((doc) => MyUser.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
 
       return userList;

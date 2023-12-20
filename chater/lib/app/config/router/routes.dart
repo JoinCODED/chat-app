@@ -1,10 +1,12 @@
 import 'package:chater/app/config/router/named_routes.dart';
+import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/chats/views/chats_screen.dart';
 import 'package:chater/app/modules/auth/views/register_screen.dart';
 import 'package:chater/app/modules/auth/views/splash_screen.dart';
 import 'package:chater/app/modules/locations/views/locations.dart';
 import 'package:chater/app/modules/navbar/view/navbar_screen.dart';
 import 'package:chater/app/modules/navbar/widgets/bottom_navbar_tabs.dart';
+import 'package:chater/app/modules/one_to_one_chat/views/message_screen.dart';
 import 'package:chater/app/modules/profile/view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -54,13 +56,23 @@ class AppRouter {
         routes: [
           // home
           GoRoute(
-            path: "/${MyNamedRoutes.homePage}",
-            name: MyNamedRoutes.homePage,
-            pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const HomePage(),
-            ),
-          ),
+              path: "/${MyNamedRoutes.homePage}",
+              name: MyNamedRoutes.homePage,
+              pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const HomePage(),
+                  ),
+              routes: [
+                //chatDetails
+                GoRoute(
+                  path: MyNamedRoutes.chatDetails,
+                  name: MyNamedRoutes.chatDetails,
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: OneToOneMessagingScreen(user: state.extra as MyUser),
+                  ),
+                ),
+              ]),
           // locations
           GoRoute(
             path: "/${MyNamedRoutes.locations}",

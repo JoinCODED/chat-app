@@ -14,7 +14,7 @@ class HomePage extends ConsumerWidget {
     final chatUsers = ref.watch(usersProvider);
     return Scaffold(
       appBar: MyAppbar(appBarTitle: Text(context.translate.users)),
-      body: chatUsers.when(data: (List<User> data) {
+      body: chatUsers.when(data: (List<MyUser> data) {
         return ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
@@ -30,30 +30,3 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
-
-
-
-
-/*
-Consumer(builder: (context, ref, child) {
-              final authProvider = ref.read(authControllerProvider.notifier);
-              final authState = ref.watch(authControllerProvider);
-              return ElevatedButton(
-                onPressed: () {
-                  authProvider.signOut().then((result) {
-                    if (result == true) {
-                      context.goNamed(MyNamedRoutes.register);
-                    }
-                  });
-                },
-                child: authState.isLoading
-                    ? const Padding(
-                        padding: EdgeInsets.all(4),
-                        child: CircularProgressIndicator(
-                          color: MyColors.primary_500,
-                        ),
-                      )
-                    : const Text("Logout"),
-              );
-            }),
-*/

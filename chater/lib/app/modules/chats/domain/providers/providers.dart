@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final chatsRepositoryProvider = Provider((ref) => ChatsRepository());
 
-final usersProvider = FutureProvider.autoDispose<List<User>>((ref) async {
+final usersProvider = FutureProvider.autoDispose<List<MyUser>>((ref) async {
   final chatsRepo = ref.watch(chatsRepositoryProvider);
   debugPrint("*******");
   try {

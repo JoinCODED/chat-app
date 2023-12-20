@@ -66,6 +66,7 @@ class AuthRepository {
           'username': userName,
           'email': email,
           'userLocation': null,
+          'userId': userId,
         },
       );
     } catch (e) {
@@ -82,5 +83,3 @@ class AuthRepository {
     }
   }
 }
-
-
