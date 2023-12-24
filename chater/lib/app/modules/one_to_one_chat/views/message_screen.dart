@@ -11,8 +11,6 @@ class OneToOneMessagingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final messagingRepo = ref.read(messagingProvider);
-    print(user);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(user.username.toString()),

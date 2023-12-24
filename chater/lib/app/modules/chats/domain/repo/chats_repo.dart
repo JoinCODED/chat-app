@@ -1,5 +1,6 @@
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatsRepository {
@@ -7,7 +8,13 @@ class ChatsRepository {
 
   Future<List<MyUser>> fetchRegisteredUsers() async {
     try {
-      QuerySnapshot querySnapshot = await _firestore.collection('users').get();
+      String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+// Query with a filter to exclude the current user
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('userId', isNotEqualTo: currentUserId) // Add the filter here
+          .get();
       List<MyUser> userList = querySnapshot.docs
           .map((doc) => MyUser.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
