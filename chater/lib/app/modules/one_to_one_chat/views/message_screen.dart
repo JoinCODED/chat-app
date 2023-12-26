@@ -1,6 +1,6 @@
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/providers/message_providers.dart';
-import 'package:chater/app/modules/one_to_one_chat/widgets/message_ui.dart';
+import 'package:chater/app/modules/one_to_one_chat/widgets/message_body_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +15,7 @@ class OneToOneMessagingScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(user.username.toString()),
       ),
-      body: MessagingView(selectedUser: user, messagingRepo: messagingRepo),
+      body: MessagingBodyView(selectedUser: user, messagingRepo: messagingRepo),
     );
   }
 }

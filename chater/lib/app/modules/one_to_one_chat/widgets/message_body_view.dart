@@ -6,21 +6,21 @@ import 'package:chater/app/modules/one_to_one_chat/widgets/message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MessagingView extends StatefulWidget {
+class MessagingBodyView extends StatefulWidget {
   final MyUser selectedUser;
   final MessagingRepository messagingRepo;
 
-  const MessagingView({
+  const MessagingBodyView({
     super.key,
     required this.selectedUser,
     required this.messagingRepo,
   });
 
   @override
-  State<MessagingView> createState() => _MessagingViewState();
+  State<MessagingBodyView> createState() => _MessagingBodyViewState();
 }
 
-class _MessagingViewState extends State<MessagingView> {
+class _MessagingBodyViewState extends State<MessagingBodyView> {
   final _sendMessageController = TextEditingController();
   @override
   Widget build(BuildContext context) {

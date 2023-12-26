@@ -2,7 +2,7 @@ import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/chats/domain/providers/providers.dart';
 import 'package:chater/app/modules/chats/widgets/chat_user_card.dart';
-import 'package:chater/app/modules/shared/auth_appbar.dart';
+import 'package:chater/app/modules/shared/custome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
