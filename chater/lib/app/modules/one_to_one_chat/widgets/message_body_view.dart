@@ -1,34 +1,35 @@
 import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/models/message.dart';
+import 'package:chater/app/modules/one_to_one_chat/domain/providers/message_providers.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/repo/message_repo.dart';
 import 'package:chater/app/modules/one_to_one_chat/widgets/message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MessagingBodyView extends StatefulWidget {
+class MessagingBodyView extends ConsumerStatefulWidget {
   final MyUser selectedUser;
-  final MessagingRepository messagingRepo;
 
   const MessagingBodyView({
     super.key,
     required this.selectedUser,
-    required this.messagingRepo,
   });
 
   @override
-  State<MessagingBodyView> createState() => _MessagingBodyViewState();
+  ConsumerState<MessagingBodyView> createState() => _MessagingBodyViewState();
 }
 
-class _MessagingBodyViewState extends State<MessagingBodyView> {
+class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
   final _sendMessageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final messagingRepo = ref.read(messagingProvider);
     return Column(
       children: [
         Expanded(
           child: StreamBuilder<List<Message>>(
-            stream: widget.messagingRepo.messagesStream(
+            stream: messagingRepo.messagesStream(
               senderId: FirebaseAuth.instance.currentUser!.uid,
               receiverId: widget.selectedUser.userId,
             ),
@@ -51,12 +52,13 @@ class _MessagingBodyViewState extends State<MessagingBodyView> {
             },
           ),
         ),
-        _buildMessageInput(context, widget.selectedUser.userId),
+        _buildMessageInput(context, widget.selectedUser.userId, messagingRepo),
       ],
     );
   }
 
-  Widget _buildMessageInput(BuildContext context, String userId) {
+  Widget _buildMessageInput(
+      BuildContext context, String userId, MessagingRepository messagingRepo) {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -70,7 +72,7 @@ class _MessagingBodyViewState extends State<MessagingBodyView> {
           IconButton(
             onPressed: () async {
               try {
-                await widget.messagingRepo
+                await messagingRepo
                     .sendMessage(
                   senderId: FirebaseAuth.instance.currentUser!.uid,
                   receiverId: userId,
@@ -86,7 +88,7 @@ class _MessagingBodyViewState extends State<MessagingBodyView> {
                   );
                 });
               }
-            }, // Implement send button functionality
+            },
             icon: const Icon(Icons.send),
           ),
         ],

@@ -52,33 +52,28 @@ class MessagingRepository {
           .doc(chatRoomId)
           .collection('messages')
           .orderBy('timestamp', descending: true)
-          .limit(20)
           .snapshots();
 
-      return snapshot.map((querySnapshot) => querySnapshot.docs.map((doc) {
-            final data = doc.data();
-            final dynamic timestamp = data['timestamp'];
+      return snapshot.map((querySnapshot) {
+        List<Message> messageList = [];
+        for (var document in querySnapshot.docs) {
+          final data = document.data();
 
-            if (timestamp is! Timestamp && timestamp.runtimeType != int) {
-              throw ('Invalid timestamp in message: ${doc.id}');
-            }
+          DateTime timestamp = data['timestamp'] is int
+              ? DateTime.fromMillisecondsSinceEpoch(data['timestamp'] as int)
+              : data['timestamp'] as DateTime;
 
-            DateTime convertedTime;
-            if (timestamp is Timestamp) {
-              convertedTime = timestamp.toDate();
-            } else {
-              convertedTime =
-                  DateTime.fromMillisecondsSinceEpoch(timestamp as int);
-            }
-
-            return Message(
-              messageId: doc.id,
-              senderId: data['senderId'],
-              receiverId: data['receiverId'],
-              message: data['message'],
-              timestamp: convertedTime,
-            );
-          }).toList());
+          Message message = Message(
+            messageId: document.id,
+            senderId: data['senderId'],
+            receiverId: data['receiverId'],
+            message: data['message'],
+            timestamp: timestamp,
+          );
+          messageList.add(message);
+        }
+        return messageList;
+      }).asBroadcastStream();
     } catch (e) {
       throw ('Error fetching messages: $e');
     }
