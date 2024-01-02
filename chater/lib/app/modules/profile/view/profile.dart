@@ -23,7 +23,7 @@ class ProfileScreen extends ConsumerWidget {
               authStateProvider.signOut().whenComplete(
                   () => context.pushNamed(MyNamedRoutes.register));
             },
-            icon: Icon(Icons.exit_to_app))
+            icon: const Icon(Icons.exit_to_app))
       ],
     );
   }

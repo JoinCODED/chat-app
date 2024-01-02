@@ -12,6 +12,7 @@ class OneToOneMessagingScreen extends StatelessWidget {
     return Scaffold(
       appBar: MyAppbar(
         appBarTitle: Text(user.username.toString()),
+        showLeading: true,
       ),
       body: MessagingBodyView(selectedUser: user),
     );

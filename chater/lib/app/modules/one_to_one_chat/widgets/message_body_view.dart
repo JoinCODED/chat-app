@@ -24,7 +24,8 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
   final _sendMessageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final messagingRepo = ref.read(messagingProvider);
+    final messagingRepo = ref.read(messagingRepositoryProvider);
+
     return Column(
       children: [
         Expanded(
