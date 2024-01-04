@@ -4,7 +4,7 @@ import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:chater/app/modules/auth/domain/providers/controller/form_controller.dart';
 import 'package:chater/app/modules/auth/domain/providers/state/auth_state.dart';
-import 'package:chater/app/modules/shared/auth_appbar.dart';
+import 'package:chater/app/modules/shared/custome_appbar.dart';
 import 'package:chater/app/modules/auth/widgets/my_auth_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

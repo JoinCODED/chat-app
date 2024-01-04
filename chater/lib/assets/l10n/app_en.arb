@@ -1,4 +1,5 @@
 {
+    "@@locale": "en",
     "register": "Register",
     "email": "Email",
     "password": "Password",
@@ -8,5 +9,11 @@
     "alreadyHaveAnAccount": "Already have an account",
     "pleaseLogin": "Please login",
     "userName": "User Name",
-    "googleLogin": "Google Login"
+    "googleLogin": "Google Login",
+    "home": "Home",
+    "location": "Locations",
+    "profile": "Profile",
+    "users": "Users",
+    "errorFetchingUsers": "Error fetching users",
+    "noUsersFound": "No users found"
 }

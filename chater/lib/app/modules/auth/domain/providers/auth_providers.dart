@@ -6,14 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(FirebaseAuth.instance);
 });
 
-final authStateProvider = StreamProvider<User?>((ref) {
+final authStateProvider = StreamProvider.autoDispose<User?>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
-  ref.read(authControllerProvider);
   return authRepository.authStateChanges;
 });
 
@@ -30,4 +28,4 @@ final authFormController =
     ChangeNotifierProvider((ref) => MyAuthFormController());
 
 final checkIfAuthinticated =
-    FutureProvider((ref) => ref.watch(authStateProvider));
+    FutureProvider.autoDispose((ref) => ref.watch(authStateProvider));
