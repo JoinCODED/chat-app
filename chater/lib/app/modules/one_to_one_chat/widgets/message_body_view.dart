@@ -1,5 +1,6 @@
 import 'package:chater/app/core/extensions/context_extension.dart';
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
+import 'package:chater/app/modules/one_to_one_chat/domain/helper/image_picker_bottom_sheet.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/providers/message_providers.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/repo/message_repo.dart';
@@ -20,8 +21,16 @@ class MessagingBodyView extends ConsumerStatefulWidget {
   ConsumerState<MessagingBodyView> createState() => _MessagingBodyViewState();
 }
 
-class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
+class _MessagingBodyViewState extends ConsumerState<MessagingBodyView>
+    with PickAnImageBottomSheet {
   final _sendMessageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _sendMessageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final messagingRepo = ref.read(messagingRepositoryProvider);
@@ -64,10 +73,21 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView> {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
+          IconButton(
+              onPressed: () => showOptions(context),
+              icon: const Icon(Icons.add_a_photo)),
           Expanded(
             child: TextField(
               controller: _sendMessageController,
-              decoration: const InputDecoration(hintText: 'Type your message'),
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: 'Type your message',
+                hintStyle: context.textTheme.bodySmall,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6),
+              ),
             ),
           ),
           IconButton(

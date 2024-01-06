@@ -15,5 +15,9 @@
     "profile": "Profile",
     "users": "Users",
     "errorFetchingUsers": "Error fetching users",
-    "noUsersFound": "No users found"
+    "noUsersFound": "No users found",
+    "photoGallery": "Photo Gallery",
+    "cameraImage": "Camera Image",
+    "cameraVideo": "Camera Video",
+    "cancel": "Cancel"
 }
