@@ -74,7 +74,11 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView>
       child: Row(
         children: [
           IconButton(
-              onPressed: () => showOptions(context),
+              onPressed: () => showOptions(
+                    context,
+                    senderId: FirebaseAuth.instance.currentUser!.uid,
+                    receiverId: userId,
+                  ),
               icon: const Icon(Icons.add_a_photo)),
           Expanded(
             child: TextField(
@@ -90,28 +94,30 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView>
               ),
             ),
           ),
-          IconButton(
-            onPressed: () async {
-              try {
-                await messagingRepo
-                    .sendMessage(
-                  senderId: FirebaseAuth.instance.currentUser!.uid,
-                  receiverId: userId,
-                  message: _sendMessageController.text,
-                )
-                    .whenComplete(() {
-                  _sendMessageController.clear();
-                });
-              } catch (e) {
-                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                  context.showSnackbar(
-                    'Error sending message: $e',
+          Consumer(builder: (context, ref, child) {
+            final messageProvider =
+                ref.read(chatMessageStateNotifierProvider.notifier);
+            return IconButton(
+              onPressed: () async {
+                try {
+                  await messageProvider.sendMessage(
+                    senderId: FirebaseAuth.instance.currentUser!.uid,
+                    receiverId: userId,
+                    message: _sendMessageController.text,
                   );
-                });
-              }
-            },
-            icon: const Icon(Icons.send),
-          ),
+
+                  _sendMessageController.clear();
+                } catch (e) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    context.showSnackbar(
+                      'Error sending message: $e',
+                    );
+                  });
+                }
+              },
+              icon: const Icon(Icons.send),
+            );
+          }),
         ],
       ),
     );
