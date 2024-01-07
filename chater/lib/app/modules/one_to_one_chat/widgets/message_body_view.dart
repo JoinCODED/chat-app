@@ -4,6 +4,7 @@ import 'package:chater/app/modules/one_to_one_chat/domain/helper/image_picker_bo
 import 'package:chater/app/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/providers/message_providers.dart';
 import 'package:chater/app/modules/one_to_one_chat/domain/repo/message_repo.dart';
+import 'package:chater/app/modules/one_to_one_chat/widgets/loading_effect.dart';
 import 'package:chater/app/modules/one_to_one_chat/widgets/message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,7 @@ class _MessagingBodyViewState extends ConsumerState<MessagingBodyView>
             },
           ),
         ),
+        const LoadingEffect(),
         _buildMessageInput(context, widget.selectedUser.userId, messagingRepo),
       ],
     );

@@ -19,6 +19,7 @@ class ChateMessageStateNotifier extends StateNotifier<ChateMessageState> {
       required String message}) async {
     try {
       state = state.copyWith(isLoading: true);
+
       await _messagingRepository.sendMessage(
           senderId: senderId, receiverId: receiverId, message: message);
       state = state.copyWith(isLoading: false, message: "");
@@ -33,7 +34,6 @@ class ChateMessageStateNotifier extends StateNotifier<ChateMessageState> {
     try {
       state = state.copyWith(isLoading: true);
       XFile? pickedFile = await picker.pickMedia();
-
       if (pickedFile != null) {
         uploadMediaFile(
           senderId: senderId,
@@ -42,6 +42,7 @@ class ChateMessageStateNotifier extends StateNotifier<ChateMessageState> {
             pickedFile.path,
           ),
         );
+        state = state.copyWith(isLoading: true);
       }
     } catch (e) {
       state =
@@ -86,16 +87,17 @@ class ChateMessageStateNotifier extends StateNotifier<ChateMessageState> {
   }
 
   /// upload file
-  Future uploadMediaFile(
-      {required File fileData,
-      required String senderId,
-      required String recieverId,
-      }) async {
+  Future uploadMediaFile({
+    required File fileData,
+    required String senderId,
+    required String recieverId,
+  }) async {
     /// using path package
     final fileName = basename(fileData.path);
     final destination = 'files/$fileName';
 
     try {
+      state = state.copyWith(isLoading: true);
       final ref = FirebaseStorage.instance.ref(destination);
       ref.putFile(fileData).then((snapshot) async {
         // Get download URL after upload completes
