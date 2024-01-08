@@ -1,4 +1,5 @@
 import 'package:chater/app/core/extensions/context_extension.dart';
+import 'package:chater/app/core/services/notification/notification_setup.dart';
 import 'package:chater/app/modules/chats/domain/models/user_model.dart';
 import 'package:chater/app/modules/chats/domain/providers/providers.dart';
 import 'package:chater/app/modules/chats/widgets/chat_user_card.dart';
@@ -6,11 +7,23 @@ import 'package:chater/app/modules/shared/custome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    notificationService.registerNotification();
+    notificationService.configLocalNotification();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final chatUsers = ref.watch(usersProvider);
     return Scaffold(
       appBar: MyAppbar(appBarTitle: Text(context.translate.users)),

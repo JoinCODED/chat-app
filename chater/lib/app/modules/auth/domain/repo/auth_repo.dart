@@ -74,6 +74,20 @@ class AuthRepository {
     }
   }
 
+  Future<void> updateUserInfoToFirebase(
+      Map<Object, Object?> updatedData) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(updatedData['userId'].toString())
+          .update(
+            updatedData,
+          );
+    } catch (e) {
+      throw AuthException(e.toString());
+    }
+  }
+
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();
@@ -83,3 +97,5 @@ class AuthRepository {
     }
   }
 }
+
+final authRepo = AuthRepository(FirebaseAuth.instance);
