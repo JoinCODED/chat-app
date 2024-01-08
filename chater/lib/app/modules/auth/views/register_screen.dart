@@ -85,7 +85,7 @@ class RegisterScreen extends StatelessWidget {
               onPressed: () {
                 authStateProvider.signInWithGoogle().then((result) {
                   if (result == true) {
-                    context.goNamed(MyNamedRoutes.homePage);
+                    GoRouter.of(context).goNamed(MyNamedRoutes.homePage);
                   } else if (authState.error != null) {
                     context.showSnackbar(authState.error.toString());
                   }
