@@ -8,7 +8,8 @@ class NotificationSetup {
   late FirebaseMessaging firebaseMessaging;
 
   late AndroidNotificationChannel channel;
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   bool isFlutterLocalNotificationsInitialized = false;
 
   NotificationSetup() {
@@ -48,7 +49,7 @@ class NotificationSetup {
       importance: Importance.high,
     );
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('app_icon');
+        const AndroidInitializationSettings('launch_background');
     DarwinInitializationSettings initializationSettingsIOS =
         const DarwinInitializationSettings();
     InitializationSettings initializationSettings = InitializationSettings(

@@ -18,8 +18,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     notificationService.registerNotification();
     notificationService.configLocalNotification();
+    // });
   }
 
   @override
