@@ -10,7 +10,6 @@ class NotificationSetup {
   late AndroidNotificationChannel channel;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  bool isFlutterLocalNotificationsInitialized = false;
 
   NotificationSetup() {
     firebaseMessaging = FirebaseMessaging.instance;
