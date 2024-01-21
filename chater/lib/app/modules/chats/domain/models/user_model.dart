@@ -4,22 +4,30 @@ class MyUser {
   final String userId;
   final String username;
   final String email;
+  final double latitude;
+  final double longitude;
 
   MyUser({
     required this.userId,
     required this.username,
     required this.email,
+    required this.latitude,
+    required this.longitude,
   });
 
   MyUser copyWith({
     String? userId,
     String? username,
     String? email,
+    double? latitude,
+    double? longitude,
   }) {
     return MyUser(
       userId: userId ?? this.userId,
       username: username ?? this.username,
       email: email ?? this.email,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -28,6 +36,8 @@ class MyUser {
       'userId': userId,
       'username': username,
       'email': email,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -36,6 +46,8 @@ class MyUser {
       userId: map['userId'] ?? '',
       username: map['username'] ?? '',
       email: map['email'] ?? '',
+      latitude: map['latitude']?.toDouble() ?? 0.0,
+      longitude: map['longitude']?.toDouble() ?? 0.0,
     );
   }
 
@@ -44,8 +56,9 @@ class MyUser {
   factory MyUser.fromJson(String source) => MyUser.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'User(userId: $userId, username: $username, email: $email)';
+  String toString() {
+    return 'MyUser(userId: $userId, username: $username, email: $email, latitude: $latitude, longitude: $longitude)';
+  }
 
   @override
   bool operator ==(Object other) {
@@ -54,11 +67,19 @@ class MyUser {
     return other is MyUser &&
         other.userId == userId &&
         other.username == username &&
-        other.email == email;
+        other.email == email &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
-  int get hashCode => userId.hashCode ^ username.hashCode ^ email.hashCode;
+  int get hashCode {
+    return userId.hashCode ^
+        username.hashCode ^
+        email.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode;
+  }
 }
 
 
