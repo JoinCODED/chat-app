@@ -12,7 +12,7 @@
         android:label="chater"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
                  <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDP4_x8pKV7p5dWdiszEZhiWbuqEZ8e3pQ"/>
